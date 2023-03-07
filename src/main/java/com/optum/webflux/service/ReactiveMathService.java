@@ -22,7 +22,7 @@ public class ReactiveMathService {
 		return Flux.range(1, 10)
 				//.doOnNext(i -> Util.sleepSeconds(1))
 				.delayElements(Duration.ofSeconds(1))
-				.doOnNext(s -> System.out.println("reactive math processing "+s))
+				.doOnNext(s -> System.out.println("reactive math processing "+s+" for input "+number))
 				.map(i -> new Response(i * number));
 	}
 
