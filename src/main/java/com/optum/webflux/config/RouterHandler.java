@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import com.optum.webflux.dto.MultiplyRequestDTO;
 import com.optum.webflux.dto.Response;
+import com.optum.webflux.exception.InputValidationException;
 import com.optum.webflux.service.ReactiveMathService;
 
 import reactor.core.publisher.Flux;
@@ -21,6 +22,15 @@ public class RouterHandler {
 
 	public Mono<ServerResponse> squareHandler(ServerRequest request) {
 		Integer input = Integer.parseInt(request.pathVariable("input"));
+		Mono<Response> monoResponse = mathService.findSquare(input);
+		return ServerResponse.ok().body(monoResponse, Response.class);
+	}
+	
+	public Mono<ServerResponse> squareHandlerWithValidation(ServerRequest request) {
+		Integer input = Integer.parseInt(request.pathVariable("input"));
+		if(input <10 || input >20)
+			return Mono.error(new InputValidationException(input));
+		
 		Mono<Response> monoResponse = mathService.findSquare(input);
 		return ServerResponse.ok().body(monoResponse, Response.class);
 	}
