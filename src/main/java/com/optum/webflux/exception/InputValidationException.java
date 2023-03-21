@@ -1,5 +1,9 @@
 package com.optum.webflux.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
 public class InputValidationException extends RuntimeException {
 
 	/**
@@ -11,6 +15,8 @@ public class InputValidationException extends RuntimeException {
 	private Integer input;
 	private Integer errorCode = 100;
 
+	public InputValidationException() {}
+	
 	public InputValidationException(Integer input) {
 		super(MSG);
 		this.input = input;
